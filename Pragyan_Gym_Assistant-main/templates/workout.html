@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Workout Session</title>
+
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background: #111;
+            color: white;
+        }
+
+        .video-section {
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: black;
+        }
+
+        .video-section img {
+            width: 95%;
+            border-radius: 15px;
+        }
+
+        .side-panel {
+            flex: 1;
+            background: #1e1e1e;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .exercise-name {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .rep-counter {
+            font-size: 60px;
+            color: #00ff99;
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .back-btn {
+            margin-top: 40px;
+            padding: 10px;
+            background: #2a5298;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .back-btn:hover {
+            background: #1e3c72;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="video-section">
+    <img src="/video/{{exercise}}">
+</div>
+
+<div class="side-panel">
+
+    <div class="exercise-name" id="exerciseName">
+        Loading...
+    </div>
+
+    <div class="rep-counter" id="reps">
+        0
+    </div>
+
+    <div class="info-box" id="position">
+        Position: --
+    </div>
+
+    <div class="info-box" id="feedback">
+        Feedback: --
+    </div>
+
+    <button class="back-btn" onclick="goBack()">⬅ Back to Home</button>
+
+</div>
+
+<script>
+    function goBack() {
+        window.location.href = "/";
+    }
+
+    setInterval(() => {
+        fetch('/state')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("exerciseName").innerText = data.exercise;
+                document.getElementById("reps").innerText = data.reps;
+                document.getElementById("position").innerText = "Position: " + data.position;
+                document.getElementById("feedback").innerText = "Feedback: " + data.feedback;
+            });
+    }, 200);
+</script>
+
+</body>
+</html>
+
